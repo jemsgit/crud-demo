@@ -1,15 +1,38 @@
 let users = require('../models/users');
+let { EDuplicate } = require('../services/error');
+const uuid = require('uuid/v4');
 
 function getUsers() {
     return users;
 }
 
-function getUserById(id) {
-    console.log(users.find(({id}) => id === id))
-    return users.find(({id}) => id === id);
+function getUserById(userId) {
+    return users.find(({id}) => id === userId);
+}
+
+function getByEmail(userEmail) {
+    return users.find(({email}) => email === userEmail);
+}
+
+function addUser(userParams) {
+    let user = users.find(user => user.email === userParams.email);
+    if(user) {
+        throw new EDuplicate('user exists')
+    }
+
+    let newUser = {
+        ...userParams,
+        id: uuid()
+    }
+
+    users.push(newUser);
+
+    return newUser;
 }
 
 module.exports = {
     getUsers,
-    getUserById
+    getUserById,
+    addUser,
+    getByEmail
 }
