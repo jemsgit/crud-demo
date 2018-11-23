@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const salt = bcrypt.getSaltSync(10);
+const salt = bcrypt.genSaltSync(10);
 
 
 function getPasswordHash(password) {
