@@ -1,5 +1,6 @@
 let users = require('../models/users');
 let { EDuplicate } = require('../services/error');
+const { getPasswordHash } = require('../services/password');
 const uuid = require('uuid/v4');
 
 function getUsers() {
@@ -22,6 +23,7 @@ function addUser(userParams) {
 
     let newUser = {
         ...userParams,
+        password: getPasswordHash(userParams.password),
         id: uuid()
     }
 
