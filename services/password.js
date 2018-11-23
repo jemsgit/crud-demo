@@ -6,6 +6,6 @@ function getPasswordHash(password) {
     const hash = bcrypt.hashSync(password, salt);
 }
 
-exports.module = {
+module.exports = {
     getPasswordHash
 }
